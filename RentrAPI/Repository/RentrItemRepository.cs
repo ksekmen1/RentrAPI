@@ -47,5 +47,16 @@ namespace RentrAPI.Repository
             _item!.Add(newItem);
             return newItem;
         }
+
+        public RentrItem Delete(int id)
+        {
+            RentrItem item = GetById(id);
+            if (item != null)
+            {
+                _item!.Remove(item);
+                return item;
+            }
+            return null;
+        }
     }
 }

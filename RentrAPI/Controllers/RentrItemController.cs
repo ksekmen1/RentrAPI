@@ -8,6 +8,7 @@ namespace RentrAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("allowAll")]
     public class RentrItemController : Controller
     {
         public readonly RentrItemRepository _RentrItemRepository;
@@ -42,6 +43,19 @@ namespace RentrAPI.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpDelete("{id}")]
+        public ActionResult<RentrItem> Delete(int id)
+        {
+            RentrItem? item = _RentrItemRepository!.Delete(id);
+            if (item != null)
+            {
+                return Ok(item);
+            }
+            return NotFound();
         }
 
 
