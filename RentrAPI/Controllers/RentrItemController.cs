@@ -1,83 +1,33 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using RentrAPI.Repository;
+using RentrAPI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RentrAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class RentrItemController : Controller
     {
-        // GET: RentrItemController
-        public ActionResult Index()
+        public readonly RentrItemRepository _RentrItemRepository;
+
+        public RentrItemController(RentrItemRepository rentrItemRepository)
         {
-            return View();
+            _RentrItemRepository = rentrItemRepository;
         }
 
-        // GET: RentrItemController/Details/5
-        public ActionResult Details(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpGet]
+        public ActionResult<IEnumerable<RentrItem>> Get([FromQuery] string Name = null)
         {
-            return View();
-        }
+            IEnumerable<RentrItem> item = _RentrItemRepository.GetAll(Name);
+            return Ok(item);
 
-        // GET: RentrItemController/Create
-        public ActionResult Create()
-        {
-            return View();
         }
+        
 
-        // POST: RentrItemController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: RentrItemController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: RentrItemController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: RentrItemController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: RentrItemController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
     }
 }

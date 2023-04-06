@@ -21,13 +21,13 @@ namespace RentrAPI.Repository
         public List<RentrItem>? GetAll(string? Name = null)
         {
 
-            List<RentrItem>? items = new List<RentrItem>(_item);
+            List<RentrItem>? item = new List<RentrItem>(_item);
             if (Name != null)
             {
-                items = items.FindAll(item => item.Name != null && item.Name.StartsWith(Name));
+                item = item.FindAll(items => items.Name != null && items.Name.StartsWith(Name));
             }
 
-            return items;
+            return item;
             
         }
     }
