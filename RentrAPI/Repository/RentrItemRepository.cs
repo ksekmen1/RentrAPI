@@ -30,5 +30,22 @@ namespace RentrAPI.Repository
             return item;
             
         }
+        public RentrItem? GetById(int id)
+        {
+            RentrItem? item = _item!.Find(item => item.Id == id);
+            if (item != null)
+            {
+                return item;
+            }
+            return null;
+        }
+
+        public RentrItem Add(RentrItem newItem)
+        {
+
+            newItem.Id = _NextId++;
+            _item!.Add(newItem);
+            return newItem;
+        }
     }
 }

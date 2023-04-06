@@ -26,8 +26,27 @@ namespace RentrAPI.Controllers
             return Ok(item);
 
         }
-        
 
-       
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpPost]
+        public ActionResult<RentrItem> Post([FromBody] RentrItem item)
+        {
+            try
+            {
+                RentrItem createdItem = _RentrItemRepository!.Add(item);
+                return Created($"/{createdItem.Id}", createdItem);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+
+
+
+
     }
 }
