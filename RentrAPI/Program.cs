@@ -1,5 +1,9 @@
 using RentrAPI.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using RentrAPI;
+using RentrAPI.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,6 +21,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication().AddJwtBearer();
+
+var optionsBuilder = new DbContextOptionsBuilder<UserDbContext>();
+optionsBuilder.UseSqlServer(Secrets.ConnectionString);
 
 builder.Services.AddSingleton(new RentrItemRepository());
 
