@@ -3,11 +3,12 @@ using RentrAPI.Repository;
 using RentrAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RentrAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController,]
     [EnableCors("allowAll")]
     public class RentrItemController : Controller
     {
@@ -20,7 +21,7 @@ namespace RentrAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [HttpGet]
+        [HttpGet, Authorize()]
         public ActionResult<IEnumerable<RentrItem>> Get([FromQuery] string Name = null)
         {
             IEnumerable<RentrItem> item = _RentrItemRepository.GetAll(Name);
